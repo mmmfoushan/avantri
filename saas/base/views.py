@@ -1,13 +1,13 @@
 from urllib import request
 from rest_framework.response import Response
 from knox.models import AuthToken
-from .serializers import UserSerializer, UserRegisterSerializer,JobSerializer
+from .serializers import UserSerializer, UserRegisterSerializer,JobSerializer,WorkHistorySerializer
 from django.contrib.auth import login
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from rest_framework import generics, permissions
 from rest_framework.decorators import api_view
-from .models import Job
+from .models import Job,WorkHistory
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -78,3 +78,15 @@ def jobDelete(request, pk):
 	job.delete()
 	return Response('Item succsesfully delete!')
 
+@api_view(['GET'])
+def workHistoryList(request,job,user):
+	workHistory = WorkHistory.objects.get(job=job,user=user)
+	serializer = WorkHistorySerializer(workHistory, many=True)
+	return Response(serializer.data)
+
+@api_view(['POST'])
+def workHistoryCreate(request):
+	serializer = WorkHistorySerializer(data=request.data)
+	if serializer.is_valid():
+		serializer.save()
+	return Response(serializer.data)

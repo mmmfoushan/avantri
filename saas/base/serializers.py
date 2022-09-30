@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Job
+from .models import Job,WorkHistory
 
 # User Serializer
 class UserSerializer(serializers.ModelSerializer):
@@ -34,4 +34,10 @@ class UserUpdateSerializer(serializers.ModelSerializer):
 class JobSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Job
+		fields ='__all__'
+
+# WorkHistory Serializer
+class WorkHistorySerializer(serializers.ModelSerializer):
+	class Meta:
+		model = WorkHistory
 		fields ='__all__'

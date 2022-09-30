@@ -16,4 +16,8 @@ urlpatterns = [
 	path('jobs-create/', views.jobCreate, name="job-create"),
 	path('jobs-update/<str:pk>/', views.jobUpdate, name="job-update"),
 	path('jobs-delete/<str:pk>/', views.jobDelete, name="job-delete"),
+
+    path('work/', views.workHistoryCreate, name="work-create"),
+    path('jobs/<str:job>/candidates/<str:user>/job-history/', views.workHistoryList, name="job-history"),
+    
 ]
